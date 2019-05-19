@@ -1,6 +1,6 @@
 import kivy
 
-kivy.require('1.10.1')
+kivy.require('1.9.1')
 
 from kivy.app import App
 from kivy.uix.label import Label
@@ -19,8 +19,8 @@ class TimerScreen(BoxLayout):
     def __init__(self, **kwargs):
         self.orientation = 'vertical'
         super(TimerScreen, self).__init__(**kwargs)
-        self.countdown = Label(text='0', font_size=72, size_hint=(1, .75))
-        self.ok_button = Button(text='I am okay', font_size=32, size_hint=(1, .25))
+        self.countdown = Label(text='30', font_size=150, size_hint=(1, .75))
+        self.ok_button = Button(text='I am okay', font_size=72, size_hint=(1, .25))
         self.ok_button.bind(on_press=self.cancelTimer)
         self.add_widget(self.countdown)
         self.add_widget(self.ok_button)
@@ -37,6 +37,7 @@ class TimerScreen(BoxLayout):
 
     def cancelTimer(self, instance):
         Clock.unschedule(self.timer)
+        self.countdown.font_size = 72
         self.countdown.text = "Cancelled the countdown!"
 
     def alarm(self, instance):
