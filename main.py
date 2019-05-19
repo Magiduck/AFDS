@@ -9,6 +9,8 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.clock import Clock
 from kivy.core.audio import SoundLoader
 
+import os.path
+
 count = 31
 
 
@@ -18,7 +20,7 @@ class TimerScreen(BoxLayout):
         self.orientation = 'vertical'
         super(TimerScreen, self).__init__(**kwargs)
         self.countdown = Label(text='0', font_size=72, size_hint=(1, .75))
-        self.ok_button = Button(text='I am okay', font_size=16, size_hint=(1, .25))
+        self.ok_button = Button(text='I am okay', font_size=32, size_hint=(1, .25))
         self.ok_button.bind(on_press=self.cancelTimer)
         self.add_widget(self.countdown)
         self.add_widget(self.ok_button)
@@ -40,11 +42,11 @@ class TimerScreen(BoxLayout):
     def alarm(self, instance):
         global count
         if count == 5:
-            final_sound = SoundLoader.load("Audio/contacting_help.mp3")
+            final_sound = SoundLoader.load(os.path.join("Audio", "contacting_help.mp3"))
             if final_sound:
                 final_sound.play()
         elif count % 5 == 0:
-            alarm_sound = SoundLoader.load("Audio/alarm.mp3")
+            alarm_sound = SoundLoader.load(os.path.join("Audio", "alarm.mp3"))
             if alarm_sound:
                 alarm_sound.play()
 
