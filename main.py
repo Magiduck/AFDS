@@ -32,7 +32,9 @@ class TimerScreen(BoxLayout):
 
     def timer(self, dt):
         if self.count == 0:
+            self.countdown.font_size = 48
             self.countdown.text = self.get_map_location()
+            gps.stop()
             Clock.unschedule(self.timer)
             # call.makecall("+36306241796")
         else:
