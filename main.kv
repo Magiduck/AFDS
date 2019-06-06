@@ -31,17 +31,15 @@
     name: 'Timer'
     BoxLayout:
         orientation: 'vertical'
-
         Label:
             text: '30'
             font_size: 120
             size_hint: (1, .75)
             id: countdown
-
         Button:
             text: 'I am okay'
             font_size: 72
             size_hint: (1, .25)
             id: ok_button
             on_press:
-                self.cancel_timer
+	            root.cancel_timer()

@@ -24,6 +24,7 @@ Config.set('graphics', 'resizable', 0)
 # Graphics fix
 Window.clearcolor = (0, 0, 0, 1.)
 
+isTimerScreen = False
 
 class AccelerometerScreen(Screen):
     # this is the main widget that contains the game
@@ -77,7 +78,8 @@ class AccelerometerScreen(Screen):
                         self.timer_1 = 0
                         self.ids.labelt.text = 'Person has fallen:' + 'YES'
                         self.ids.labelu.text = 'Fase:' + '3 Succeeded'
-                        ScreenManagement.current = 'Timer'
+                        global isTimerScreen
+                        isTimerScreen = True
                         Clock.unschedule(self.check_accel)
                 elif self.timer_1 > 150:  # Auto reset for third fase (for when there is still movement)
                     self.hitGround = False
@@ -113,7 +115,7 @@ class TimerScreen(Screen):
         Clock.schedule_interval(self.timer, 1)
 
     def timer(self, dt):
-        if ScreenManagement.current == 'Timer':
+        if isTimerScreen:
             if self.count == 0:
                 self.ids.countdown.font_size = 48
                 self.ids.countdown.text = self.get_map_location()
@@ -125,7 +127,7 @@ class TimerScreen(Screen):
                 self.count -= 1
                 self.ids.countdown.text = str(self.count)
 
-    def cancel_timer(self, instance):
+    def cancel_timer(self):
         Clock.unschedule(self.timer)
         self.ids.countdown.font_size = 72
         self.ids.countdown.text = "Cancelled the countdown!"
@@ -161,6 +163,11 @@ class ScreenManagement(ScreenManager):
     def __init__(self, **kwargs):
         super(ScreenManagement, self).__init__(**kwargs)
         self.current = 'Accelerometer'
+        Clock.schedule_interval(self.check_if_change_screens, 0.5)
+
+    def check_if_change_screens(self, dt):
+        if isTimerScreen:
+            self.current = 'Timer'
 
 
 Builder.load_file("main.kv")
