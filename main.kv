@@ -4,31 +4,28 @@
 
 <AccelerometerScreen>:
     name: 'Accelerometer'
-    Label:
-        text: 'accelerometer:'
-        id: label
-        y: root.height * 0.2
-        x: root.width * 0.5
-    Label:
-        text: 'measure high value:'
-        id: labelf
-        y: root.height * 0.3
-        x: root.width * 0.5
-    Label:
-        text: 'measure low value:'
-        id: labely
-        y: root.height * 0.4
-        x: root.width * 0.5
-    Label:
-        text: 'Person has fallen: NO'
-        id: labelt
-        y: root.height * 0.5
-        x: root.width * 0.5
-    Label:
-        text: 'Fase:'
-        id: labelu
-        y: root.height * 0.6
-        x: root.width * 0.5
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            text: 'accelerometer:'
+            id: label
+            size_hint: (1, .2)
+        Label:
+            text: 'measure high value:'
+            id: labelf
+            size_hint: (1, .2)
+        Label:
+            text: 'measure low value:'
+            id: labely
+            size_hint: (1, .2)
+        Label:
+            text: 'Person has fallen: NO'
+            id: labelt
+            size_hint: (1, .2)
+        Label:
+            text: 'Fase:'
+            id: labelu
+            size_hint: (1, .2)
 
 <TimerScreen>:
     name: 'Timer'

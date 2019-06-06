@@ -77,6 +77,7 @@ class AccelerometerScreen(Screen):
                         self.timer_1 = 0
                         self.ids.labelt.text = 'Person has fallen:' + 'YES'
                         self.ids.labelu.text = 'Fase:' + '3 Succeeded'
+                        ScreenManagement.current = 'Timer'
                         Clock.unschedule(self.check_accel)
                 elif self.timer_1 > 150:  # Auto reset for third fase (for when there is still movement)
                     self.hitGround = False
@@ -112,16 +113,17 @@ class TimerScreen(Screen):
         Clock.schedule_interval(self.timer, 1)
 
     def timer(self, dt):
-        if self.count == 0:
-            self.ids.countdown.font_size = 48
-            self.ids.countdown.text = self.get_map_location()
-            gps.stop()
-            Clock.unschedule(self.timer)
-            # call.makecall("+36306241796")
-        else:
-            self.alarm()
-            self.count -= 1
-            self.ids.countdown.text = str(self.count)
+        if ScreenManagement.current == 'Timer':
+            if self.count == 0:
+                self.ids.countdown.font_size = 48
+                self.ids.countdown.text = self.get_map_location()
+                gps.stop()
+                Clock.unschedule(self.timer)
+                # call.makecall("+36306241796")
+            else:
+                self.alarm()
+                self.count -= 1
+                self.ids.countdown.text = str(self.count)
 
     def cancel_timer(self, instance):
         Clock.unschedule(self.timer)
@@ -158,13 +160,7 @@ class ScreenManagement(ScreenManager):
 
     def __init__(self, **kwargs):
         super(ScreenManagement, self).__init__(**kwargs)
-        self.screen_switch_one()
-
-    def screen_switch_one(self):
         self.current = 'Accelerometer'
-
-    def screen_switch_two(self):
-        self.current = 'Timer'
 
 
 Builder.load_file("main.kv")
