@@ -25,9 +25,6 @@ Config.set('graphics', 'resizable', 0)
 Window.clearcolor = (0, 0, 0, 1.)
 
 
-# Create the manager
-# sm = ScreenManager()
-
 class AccelerometerScreen(Screen):
     # this is the main widget that contains the game
     def __init__(self, **kwargs):
@@ -81,7 +78,6 @@ class AccelerometerScreen(Screen):
                         self.ids.labelt.text = 'Person has fallen:' + 'YES'
                         self.ids.labelu.text = 'Fase:' + '3 Succeeded'
                         Clock.unschedule(self.check_accel)
-                        # sm.current = 'Timer'
                 elif self.timer_1 > 150:  # Auto reset for third fase (for when there is still movement)
                     self.hitGround = False
                     self.falling = False
@@ -159,16 +155,24 @@ class TimerScreen(Screen):
 
 
 class ScreenManagement(ScreenManager):
-    pass
+
+    def __init__(self, **kwargs):
+        super(ScreenManagement, self).__init__(**kwargs)
+        self.screen_switch_one()
+
+    def screen_switch_one(self):
+        self.current = 'Accelerometer'
+
+    def screen_switch_two(self):
+        self.current = 'Timer'
 
 
-sm = Builder.load_file("main.kv")
+Builder.load_file("main.kv")
 
 
 class AFDSApp(App):
-
     def build(self):
-        return sm
+        return ScreenManagement()
 
 
 if __name__ == '__main__':
